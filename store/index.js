@@ -95,20 +95,15 @@ export const actions = {
     commit('setPrevPageSlider');
   },
   async setNewItemSlider(store, value) {
-    await this.$axios
-      .get(`https://picsum.photos/id/${store.state.slider.length + 1}/info`)
-      .then(response => {
-        store.commit('setNewItemSlider',
-          {
-            id: store.state.slider.length + 1,
-            title: value.title,
-            subtitle: value.subtitle,
-            author: value.author,
-            image: response.data.download_url
-          }
-        );
-      })
-      .catch(err => console.log(err));
+    store.commit('setNewItemSlider',
+      {
+        id: store.state.slider.length + 1,
+        title: value.title,
+        subtitle: value.subtitle,
+        author: value.author,
+        image: value.image
+      }
+    );
   },
   setModal({ commit }, value) {
     commit('setModal', value);

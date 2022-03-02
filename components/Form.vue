@@ -13,20 +13,30 @@
         <div>Введите автора</div>
         <input class="form__input" type="text" v-model="author">
       </div>
+      <div class="form__inner">
+        <div>Добавьте изображение</div>
+        <input class="form__input" type="file" ref="image" multiple @change="addImage()">
+      </div>
     </div>
     <button @click="addItem()">Добавить новый слайдер</button>
   </div>
 </template>
 
 <script>
+
 export default {
   name: "Form",
+
+  components: {
+    FileReader
+  },
 
   data() {
     return {
       title: '',
       subtitle: '',
       author: '',
+      image: '',
     }
   },
 
@@ -36,8 +46,18 @@ export default {
         title: this.title,
         subtitle: this.subtitle,
         author: this.author,
+        image: this.image,
       }
       this.$store.dispatch('setNewItemSlider', item)
+    },
+
+    addImage() {
+      const image = this.$refs.image.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(image);
+      reader.onload = () => {
+        this.image = reader.result;
+      }
     }
   }
 }
