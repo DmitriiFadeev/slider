@@ -20,6 +20,9 @@ export const getters = {
     const articlesOnPage = 1;
     const startFrom = buttonClicked * articlesOnPage;
     return state.slider.slice(startFrom, startFrom + articlesOnPage);
+  },
+  getSliderActivePage(state){
+    return state.sliderActivePage
   }
 }
 

@@ -79,16 +79,30 @@ export default {
 
   computed: {
     ...mapState(['slider', 'sliderActivePage']),
-    ...mapGetters(['getSliderPagination', 'getSlider']),
+    ...mapGetters(['getSliderPagination', 'getSlider', 'getSliderActivePage']),
   },
 
   methods: {
     ...mapActions(['setSlider','setSliderActive', 'setNextPageSlider', 'setPrevPageSlider', 'setModal']),
+
+    interval() {
+      this.counterInterval = setInterval(() => {
+        if (this.getSliderActivePage === this.getSliderPagination - 1) {
+          this.setSliderActive(0);
+        }
+        this.setNextPageSlider();
+      }, 3000);
+    },
   },
 
   mounted() {
     this.setSlider()
-  }
+    this.interval()
+  },
+
+  beforeDestroy() {
+    clearInterval(this.counterInterval);
+  },
 }
 </script>
 
